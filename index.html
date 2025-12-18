@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peter Yu | 游鎮遠</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&family=Noto+Sans+TC:wght@300;500;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #3b82f6;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #000000 100%);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0; width: 0%; height: 4px;
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bento-item {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .bento-item:hover {
+            transform: scale(1.01);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+            background: rgba(30, 41, 59, 0.7);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 1.5rem;
+            padding-bottom: 1rem;
+            scroll-snap-type: x mandatory;
+        }
+
+        .scroll-item {
+            min-width: 320px;
+            scroll-snap-align: start;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #details-modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #details-modal.hidden { opacity: 0; visibility: hidden; display: flex; }
+
+        .modal-image-item {
+            min-width: 100%;
+            scroll-snap-align: start;
+            aspect-ratio: 16 / 9;
+            background: #1e293b;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-image-item img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .glow {
+            position: fixed;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <div id="progress-bar"></div>
+    <div class="glow" id="ambient-glow"></div>
+
+    <div id="details-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+        <div class="bento-item max-w-3xl w-full max-h-[90vh] overflow-y-auto bg-slate-900 p-8 relative shadow-2xl cursor-default border-slate-700">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white z-10 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-8 py-3 rounded-full border border-white/10 shadow-2xl bg-black/40 backdrop-blur-xl flex items-center space-x-6 md:space-x-8 text-xs md:text-sm font-medium">
+        <a href="#home" class="hover:text-blue-400 transition-colors">首頁</a>
+        <a href="#experience" class="hover:text-blue-400 transition-colors text-nowrap">學經歷</a>
+        <a href="#projects" class="hover:text-blue-400 transition-colors">專案</a>
+        <a href="#interests" class="hover:text-blue-400 transition-colors">興趣</a>
+        <a href="#blog" class="hover:text-blue-400 transition-colors text-nowrap">廢話集</a>
+        <a href="#contact" class="px-4 py-1.5 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all">聯絡我</a>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-6 pt-32 pb-24">
+        
+        <section id="home" class="mb-12 grid grid-cols-1 md:grid-cols-12 gap-6 reveal">
+            <div class="md:col-span-8 bento-item p-12 flex flex-col justify-center cursor-default hover:scale-100">
+                <h1 class="text-6xl md:text-9xl font-black mb-4 leading-none tracking-tighter">
+                    <span class="text-white text-nowrap">游鎮遠</span><br>
+                    <span class="text-gradient">Peter Yu</span>
+                </h1>
+                <div class="h-1 w-24 bg-blue-600 rounded-full mt-4 animate-pulse"></div>
+            </div>
+            <div class="md:col-span-4 bento-item p-4 overflow-hidden group cursor-default hover:scale-100 flex flex-col">
+                <div class="flex-1 min-h-[300px] bg-slate-800 rounded-2xl overflow-hidden relative aspect-square md:aspect-auto">
+                    <div id="portrait-placeholder" class="absolute inset-0 flex items-center justify-center text-slate-500 font-bold italic transition-opacity duration-300">
+                        Portrait Image
+                    </div>
+                    <img src="img/me.jpg" alt="Peter Yu" 
+                         class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" 
+                         onload="this.classList.remove('opacity-0'); document.getElementById('portrait-placeholder').style.opacity='0';"
+                         onerror="this.style.display='none'">
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="mb-12 grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+            <div class="bento-item p-10 cursor-default hover:scale-100">
+                <div class="flex items-center space-x-3 mb-8">
+                    <div class="p-2 bg-blue-900/30 rounded-lg text-blue-400">🎓</div>
+                    <h2 class="text-2xl font-black text-white">學歷</h2>
+                </div>
+                <div class="space-y-8 relative before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-800">
+                    <div class="pl-8 relative">
+                        <div class="absolute left-0 top-1.5 w-6 h-6 bg-blue-600 rounded-full border-4 border-slate-900 shadow-sm"></div>
+                        <h4 class="font-bold text-lg text-white">國立清華大學 (NTHU)</h4>
+                        <p class="text-sm text-slate-400">電機工程學系 碩士 | 2022 - 現在</p>
+                        <p class="text-xs inline-block bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded mt-1 font-bold">GPA 3.96 / 4.3</p>
+                    </div>
+                    <div class="pl-8 relative">
+                        <div class="absolute left-0 top-1.5 w-6 h-6 bg-slate-600 rounded-full border-4 border-slate-900 shadow-sm"></div>
+                        <h4 class="font-bold text-lg text-white">國立台北科技大學 (NTUT)</h4>
+                        <p class="text-sm text-slate-400">電子工程系 學士 | 2019 - 2022</p>
+                        <div class="flex flex-wrap gap-2 mt-1">
+                            <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded font-bold">GPA 3.90 / 4.0</span>
+                            <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded font-bold">書卷獎第一名</span>
+                            <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded font-bold">三年提早畢業</span>
+                        </div>
+                        <p class="text-xs inline-block bg-amber-900/50 text-amber-300 px-2 py-0.5 rounded mt-2 font-bold">專題系內佳作</p>
+                    </div>
+                    <div class="pl-8 relative">
+                        <div class="absolute left-0 top-1.5 w-6 h-6 bg-slate-600 rounded-full border-4 border-slate-900 shadow-sm"></div>
+                        <h4 class="font-bold text-lg text-white">大安高工 (TAIVS)</h4>
+                        <p class="text-sm text-slate-400">控制科 | 2016 - 2019</p>
+                        <div class="flex flex-wrap gap-2 mt-1">
+                            <span class="text-xs bg-amber-900/50 text-amber-300 px-2 py-0.5 rounded font-bold">專題校內佳作</span>
+                            <span class="text-xs bg-amber-900/50 text-amber-300 px-2 py-0.5 rounded font-bold">專題全國競賽優勝</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bento-item p-10 cursor-default hover:scale-100">
+                <div class="flex items-center space-x-3 mb-8">
+                    <div class="p-2 bg-purple-900/30 rounded-lg text-purple-400">💼</div>
+                    <h2 class="text-2xl font-black text-white">經歷</h2>
+                </div>
+                <div class="space-y-8 relative before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-800">
+                    <div class="pl-8 relative">
+                        <div class="absolute left-0 top-1.5 w-6 h-6 bg-slate-600 rounded-full border-4 border-slate-900 shadow-sm"></div>
+                        <h4 class="font-bold text-lg text-white">德欣寰宇科技股份有限公司</h4>
+                        <p class="text-sm text-slate-400">助理工程師 | 2020/07 - 2020/09</p>
+                        <p class="text-sm mt-2 text-slate-500 leading-relaxed">協助資安服務，包括網段弱點掃描、資訊安全教材開發等。</p>
+                    </div>
+                    <div class="pl-8 relative">
+                        <div class="absolute left-0 top-1.5 w-6 h-6 bg-slate-600 rounded-full border-4 border-slate-900 shadow-sm"></div>
+                        <h4 class="font-bold text-lg text-white">德欣寰宇科技股份有限公司</h4>
+                        <p class="text-sm text-slate-400">助理工程師 | 2019/07 - 2019/09</p>
+                        <p class="text-sm mt-2 text-slate-500 leading-relaxed">協助資安服務，包括網段弱點掃描、資訊安全教材開發等。</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="mb-12 reveal">
+            <div class="flex justify-between items-end mb-8 px-2">
+                <h2 class="text-3xl font-black uppercase tracking-tight text-white">專案 <span class="text-slate-600 font-light">Projects</span></h2>
+            </div>
+            <div class="scroll-container no-scrollbar" id="project-scroll">
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 0)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase">A graduation project in high school</div>
+                    <h3 class="text-xl font-bold mb-4 text-white">PS2 無線遙控教導式機械手臂</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Detail →</div>
+                </div>
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 1)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase">A undergraduate project in university</div>
+                    <h3 class="text-xl font-bold mb-4 text-white">整合至自偏壓收發機模組的透明基板天線</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Detail →</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="interests" class="mb-12 reveal">
+            <div class="flex justify-between items-end mb-8 px-2">
+                <h2 class="text-3xl font-black uppercase tracking-tight text-white">興趣 <span class="text-slate-600 font-light">Interests</span></h2>
+            </div>
+            <div class="scroll-container no-scrollbar" id="interest-scroll">
+                <div class="min-w-[180px] snap-start bento-item p-8 text-center group" onclick="openModal('interest', 0)">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🦴</div>
+                    <span class="text-xs font-bold opacity-60 uppercase text-white">可愛動物</span>
+                </div>
+                <div class="min-w-[180px] snap-start bento-item p-8 text-center group" onclick="openModal('interest', 1)">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">💎</div>
+                    <span class="text-xs font-bold opacity-60 uppercase text-white">化石琥珀</span>
+                </div>
+                <div class="min-w-[180px] snap-start bento-item p-8 text-center group" onclick="openModal('interest', 2)">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🌱</div>
+                    <span class="text-xs font-bold opacity-60 uppercase text-white">食肉植物</span>
+                </div>
+                <div class="min-w-[180px] snap-start bento-item p-8 text-center group" onclick="openModal('interest', 3)">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🪙</div>
+                    <span class="text-xs font-bold opacity-60 uppercase text-white">古幣紙鈔</span>
+                </div>
+                <div class="min-w-[180px] snap-start bento-item p-8 text-center group" onclick="openModal('interest', 4)">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🎮</div>
+                    <span class="text-xs font-bold opacity-60 uppercase text-white">玩點遊戲</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" class="mb-12 reveal">
+            <div class="flex justify-between items-end mb-8 px-2">
+                <h2 class="text-3xl font-black uppercase tracking-tight text-white">廢話集 <span class="text-slate-600 font-light">Thoughts</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bento-item p-8 flex flex-col justify-between" onclick="openModal('blog', 0)">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">2025 / 12 / 19</span>
+                        <h3 class="text-lg font-bold mt-2 mb-4 text-white">歡迎來到我的個人網頁</h3>
+                        <p class="text-sm text-slate-400 line-clamp-3">以前的個人網頁荒廢已久，沒事來做一個新的，但不知道可以維護多久，ㄏㄏ。</p>
+                    </div>
+                    <div class="text-blue-400 text-[10px] font-black uppercase mt-6">Read More →</div>
+                </div>
+                <div class="bento-item p-8 flex flex-col justify-center border-dashed border-2 border-slate-700 bg-transparent cursor-default">
+                    <p class="text-center text-slate-600 text-sm font-medium italic">更多內容正在醞釀中...</p>
+                </div>
+            </div>
+        </section>
+
+        <footer id="contact" class="text-center py-12 border-t border-slate-900 mt-12 reveal">
+            <h2 class="text-xl font-black mb-8 text-white uppercase tracking-tighter italic">聯絡我</h2>
+            <div class="flex flex-wrap justify-center gap-8 mb-8">
+                <a href="mailto:peter890331@gmail.com" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
+                    Email <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
+                </a>
+                <a href="https://www.linkedin.com/in/peter890331" target="_blank" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
+                    LinkedIn <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
+                </a>
+                <a href="https://github.com/peter890331" target="_blank" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
+                    GitHub <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
+                </a>
+                <a href="https://linktr.ee/peter890331" target="_blank" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
+                    Linktree <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
+                </a>
+            </div>
+            <p class="text-[10px] text-slate-600 uppercase tracking-[0.25em] font-bold">Peter Yu &copy; 2025</p>
+        </footer>
+    </main>
+
+    <script>
+        const projectData = [
+            {
+                title: "PS2 無線遙控教導式機械手臂 | PS2 Wireless Remote Control Teachable Robotic Arm",
+                tag: "A graduation project in high school",
+                desc: "PS2 無線遙控教導式機械手臂，透過流暢的自動學習系統，提升機械手臂流程修改上的效率，本團隊利用整合 PS2 無線遙控模組與 LCD 顯示器，做出簡單的人機控制介面，PS2 控制器用來操控機械手臂的所有動作，LCD 則用以顯示動作資訊，使用者便能夠更簡單地對機械手臂進行操控與教導，讓功能完善的自組機械手臂自動化做出任何使用者教導的動作流程，令其持續工作，當然也能隨時教導新的動作流程。而使用者也能夠在設定流程時選擇自動流程所需的次數， 模擬工廠自動設備的工作要求。",
+                images: ["img/projects/A graduation project in high school/1.jpg", "img/projects/A graduation project in high school/2.jpg", "img/projects/A graduation project in high school/3.jpg", "img/projects/A graduation project in high school/4.jpg"],
+                detail: "當時做得很辛苦的專題。",
+                youtube: "https://youtu.be/B3R5VX4Qshs",
+                github: "https://github.com/peter890331/PS2-Wireless-Remote-Control-Teachable-Robotic-Arm.git"
+            },
+            {
+                title: "整合至自偏壓收發機模組的透明基板天線 | Transparent Substrate Antennas Integrating to Self Biased Transceiver Modules",
+                tag: "A undergraduate project in university",
+                desc: "本專題以Monopole天線外型為基礎，設計並製作一款可基於透明基板上之天線，並於天線中預留足夠的空間讓太陽光通過，使位於下方的太陽能板能提供電力驅動藍牙模組，藍牙模組則透過此天線於2.4GHz~2.48GHz的ISM頻段傳輸訊息，完成自偏壓之收發機模組。欲設計出能使陽光順利通過的天線，經由本組研究後決定採用玻璃作為天線之基板。由於玻璃基板無法使用一般常見的銅蝕刻技術製作天線，因此本次專題之透明基板天線是運用到奈米噴印技術所印製而成，相較於傳統利用銅蝕刻技術製作之天線，此技術能選用多種不同材質的墨水作為天線上之導體，並且能噴印在如玻璃等基板的表面。本專題採用的方案，是以奈米銀為導體印製於玻璃基板，使太陽光能穿透天線的網格與透明基板，到達太陽能板以提供收發機模組所需的電力，而銀具有良好的導電能力，能做為天線的導體材質。將透明基板天線連接到藍牙模組後，能順利與手機的應用程式通訊，同時天線下方的太陽能板也能正常運作，轉換太陽能為電力並儲存至鋰電池中，以提供Arduino藍牙模組持續運作所需能源。",
+                images: ["img/projects/A undergraduate project in university/1.jpg", "img/projects/A undergraduate project in university/2.jpg", "img/projects/A undergraduate project in university/3.jpg", "img/projects/A undergraduate project in university/4.jpg", "img/projects/A undergraduate project in university/5.png"],
+                detail: "天線專題實作。",
+                youtube: "https://youtu.be/ptymVCwnhSs",
+                github: "https://github.com/peter890331/Transparent-Substrate-Antennas-Integrating-to-Self-Biased-Transceiver-Modules"
+            },
+        ];
+
+        const blogData = [
+            {
+                title: "歡迎來到我的個人網頁",
+                date: "2025 / 12 / 19",
+                content: "以前的個人網頁荒廢已久，沒事來做一個新的，但不知道可以維護多久，ㄏㄏ。"
+            }
+        ];
+
+        const interestData = [
+            {
+                title: "可愛動物",
+                desc: "大家都說我養的動物很怪，但我覺得很可愛。",
+                images: []
+            },
+            {
+                title: "化石琥珀",
+                desc: "化石跟琥珀其實沒有大家想像的那麼遙不可及，每一塊都是時間的膠囊。",
+                images: []
+            },
+            {
+                title: "食肉植物",
+                desc: "吃肉的植物，雖然現在沒種了，但依然覺得它們的演化機制很酷。",
+                images: []
+            },
+            {
+                title: "古幣紙鈔",
+                desc: "這超酷，以古為鏡，可以透過貨幣看見歷史的更迭與興替。",
+                images: []
+            },
+            {
+                title: "玩點遊戲",
+                desc: "就偶爾玩玩，越玩越懶，更多時候是在觀察遊戲的設計與系統架構。",
+                images: []
+            }
+        ];
+
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / windowHeight) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(reveal => {
+                const revealTop = reveal.getBoundingClientRect().top;
+                if (revealTop < window.innerHeight - 150) {
+                    reveal.classList.add('active');
+                }
+            });
+        });
+
+        const glow = document.getElementById('ambient-glow');
+        window.addEventListener('mousemove', (e) => {
+            glow.style.left = `${e.clientX}px`;
+            glow.style.top = `${e.clientY}px`;
+        });
+
+        function openModal(type, index) {
+            const modal = document.getElementById('details-modal');
+            const content = document.getElementById('modal-content');
+            let data = type === 'project' ? projectData[index] : (type === 'blog' ? blogData[index] : interestData[index]);
+
+            let imagesHtml = '';
+            if (data.images && data.images.length > 0) {
+                imagesHtml = `
+                    <div class="scroll-container no-scrollbar mb-6 snap-x snap-mandatory" id="modal-img-scroll">
+                        ${data.images.map(src => `
+                            <div class="modal-image-item">
+                                <img src="${src}" alt="${data.title}" 
+                                     class="opacity-0 transition-opacity duration-500"
+                                     onload="this.classList.remove('opacity-0')"
+                                     onerror="this.parentElement.innerHTML='<div class=\'p-8 text-slate-500 italic text-sm\'>Photo: ${src}</div>'">
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            if (type === 'project') {
+                let linksHtml = '';
+                if (data.youtube || data.github) {
+                    linksHtml = `<div class="mt-6 border-t border-slate-800 pt-6 flex flex-wrap gap-4">`;
+                    if (data.youtube) {
+                        linksHtml += `
+                            <a href="${data.youtube}" target="_blank" class="inline-flex items-center space-x-2 text-red-500 hover:bg-red-900/20 px-3 py-1.5 rounded-lg transition-all font-bold text-sm">
+                                <span>YouTube</span>
+                            </a>
+                        `;
+                    }
+                    if (data.github) {
+                        linksHtml += `
+                            <a href="${data.github}" target="_blank" class="inline-flex items-center space-x-2 text-slate-300 hover:bg-slate-800 px-3 py-1.5 rounded-lg transition-all font-bold text-sm">
+                                <span>GitHub</span>
+                            </a>
+                        `;
+                    }
+                    linksHtml += `</div>`;
+                }
+
+                content.innerHTML = `
+                    ${imagesHtml}
+                    <span class="text-blue-400 text-xs font-bold uppercase tracking-widest">${data.tag}</span>
+                    <h2 class="text-3xl font-black mt-2 mb-4 text-white">${data.title}</h2>
+                    <p class="text-slate-400 leading-relaxed mb-6">${data.desc}</p>
+                    <div class="p-4 bg-slate-800 rounded-xl border border-slate-700 text-sm text-slate-500 font-mono">${data.detail}</div>
+                    ${linksHtml}
+                `;
+            } else if (type === 'blog') {
+                content.innerHTML = `
+                    <span class="text-blue-400 text-xs font-bold uppercase tracking-widest">${data.date}</span>
+                    <h2 class="text-3xl font-black mt-2 mb-8 text-white">${data.title}</h2>
+                    <div class="prose prose-invert max-w-none">
+                        <p class="text-slate-400 leading-relaxed text-lg whitespace-pre-line">${data.content}</p>
+                    </div>
+                `;
+            } else {
+                content.innerHTML = `
+                    ${imagesHtml}
+                    <h2 class="text-3xl font-black mb-4 text-white">${data.title}</h2>
+                    <p class="text-slate-400 leading-relaxed">${data.desc}</p>
+                `;
+            }
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                const scrollEl = document.getElementById('modal-img-scroll');
+                if (scrollEl) setupHorizontalScroll('modal-img-scroll');
+            }, 50);
+        }
+
+        function closeModal() {
+            document.getElementById('details-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function setupHorizontalScroll(elementId) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            element.addEventListener('wheel', (e) => {
+                if (e.deltaY !== 0) {
+                    e.preventDefault();
+                    element.scrollLeft += e.deltaY * 3.5;
+                }
+            }, { passive: false });
+        }
+
+        window.onload = () => {
+            setupHorizontalScroll('project-scroll');
+            setupHorizontalScroll('interest-scroll');
+            window.dispatchEvent(new Event('scroll'));
+        };
+
+        window.addEventListener('click', (e) => { if (e.target.id === 'details-modal') closeModal(); });
+    </script>
+</body>
+</html>
