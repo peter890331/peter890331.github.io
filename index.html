@@ -220,12 +220,17 @@
             <div class="scroll-container no-scrollbar" id="project-scroll">
                 <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 0)">
                     <div class="text-xs font-bold text-blue-400 mb-2 uppercase">A graduation project in high school</div>
-                    <h3 class="text-xl font-bold mb-4 text-white">PS2 無線遙控教導式機械手臂</h3>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all">PS2 無線遙控教導式機械手臂</h3>
                     <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Detail →</div>
                 </div>
                 <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 1)">
                     <div class="text-xs font-bold text-blue-400 mb-2 uppercase">A undergraduate project in university</div>
-                    <h3 class="text-xl font-bold mb-4 text-white">整合至自偏壓收發機模組的透明基板天線</h3>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all">整合至自偏壓收發機模組的透明基板天線</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Detail →</div>
+                </div>
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 2)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase">A Pokémon GO game bot script</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all">new_autoshinyhunter_gui_version</h3>
                     <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Detail →</div>
                 </div>
             </div>
@@ -284,7 +289,7 @@
                 <a href="mailto:peter890331@gmail.com" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
                     Email <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
                 </a>
-                <a href="https://www.linkedin.com/in/peter890331" target="_blank" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
+                <a href="http://www.linkedin.com/in/peter890331" target="_blank" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
                     LinkedIn <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
                 </a>
                 <a href="https://github.com/peter890331" target="_blank" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
@@ -312,11 +317,20 @@
             {
                 title: "整合至自偏壓收發機模組的透明基板天線 | Transparent Substrate Antennas Integrating to Self Biased Transceiver Modules",
                 tag: "A undergraduate project in university",
-                desc: "本專題以Monopole天線外型為基礎，設計並製作一款可基於透明基板上之天線，並於天線中預留足夠的空間讓太陽光通過，使位於下方的太陽能板能提供電力驅動藍牙模組，藍牙模組則透過此天線於2.4GHz~2.48GHz的ISM頻段傳輸訊息，完成自偏壓之收發機模組。欲設計出能使陽光順利通過的天線，經由本組研究後決定採用玻璃作為天線之基板。由於玻璃基板無法使用一般常見的銅蝕刻技術製作天線，因此本次專題之透明基板天線是運用到奈米噴印技術所印製而成，相較於傳統利用銅蝕刻技術製作之天線，此技術能選用多種不同材質的墨水作為天線上之導體，並且能噴印在如玻璃等基板的表面。本專題採用的方案，是以奈米銀為導體印製於玻璃基板，使太陽光能穿透天線的網格與透明基板，到達太陽能板以提供收發機模組所需的電力，而銀具有良好的導電能力，能做為天線的導體材質。將透明基板天線連接到藍牙模組後，能順利與手機的應用程式通訊，同時天線下方的太陽能板也能正常運作，轉換太陽能為電力並儲存至鋰電池中，以提供Arduino藍牙模組持續運作所需能源。",
+                desc: "本專題以Monopole天線外型為基礎，設計並製作一款可基於透明基板上之天線，並於天線中預留足夠的空間讓太陽光通過，使位於下方的太陽能板能提供電力驅動藍牙模組，藍牙模組則透過此天線於2.4GHz~2.48GHz的ISM頻段傳輸訊息，完成自偏壓之收發機模組。\n\n欲設計出能使陽光順利通過的天線，經由本組研究後決定採用玻璃作為天線之基板。由於玻璃基板無法使用一般常見的銅蝕刻技術製作天線，因此本次專題之透明基板天線是運用到奈米噴印技術所印製而成，相較於傳統利用銅蝕刻技術製作之天線，此技術能選用多種不同材質的墨水作為天線上之導體，並且能噴印在如玻璃等基板的表面。本專題採用的方案，是以奈米銀為導體印製於玻璃基板，使太陽光能穿透天線的網格與透明基板，到達太陽能板以提供收發機模組所需的電力，而銀具有良好的導電能力，能做為天線的導體材質。\n\n將透明基板天線連接到藍牙模組後，能順利與手機的應用程式通訊，同時天線下方的太陽能板也能正常運作，轉換太陽能為電力並儲存至鋰電池中，以提供Arduino藍牙模組持續運作所需能源。",
                 images: ["img/projects/A undergraduate project in university/1.jpg", "img/projects/A undergraduate project in university/2.jpg", "img/projects/A undergraduate project in university/3.jpg", "img/projects/A undergraduate project in university/4.jpg", "img/projects/A undergraduate project in university/5.png"],
-                detail: "天線專題實作。",
+                detail: "白癡天線專題。",
                 youtube: "https://youtu.be/ptymVCwnhSs",
                 github: "https://github.com/peter890331/Transparent-Substrate-Antennas-Integrating-to-Self-Biased-Transceiver-Modules"
+            },
+            {
+                title: "new_autoshinyhunter_gui_version",
+                tag: "A Pokémon GO game bot script",
+                desc: "一個在Pokémon GO中自動點擊色違且iv100的寶可夢的外掛腳本。\n\nThis game bot script can fully automatically send your game position to any location in the world where the specified iv100 pokémon appear, and click on the pokémon to determine whether it is a shiny, if not, then continue to try in the whole world, if yes, stop the script and wait for manual capture.",
+                images: ["img/projects/A Pokémon GO game bot script/1.png"],
+                detail: "最有成就感的 Side Project 耶。",
+                youtube: "https://www.youtube.com/watch?v=8h2jUKUrAkY&list=PLN0w7j_rRAO8jQKUtQZqwDHsG4QiPCuCx&pp=gAQB",
+                github: "https://github.com/peter890331/new_autoshinyhunter_gui_version"
             },
         ];
 
@@ -420,10 +434,10 @@
 
                 content.innerHTML = `
                     ${imagesHtml}
-                    <span class="text-blue-400 text-xs font-bold uppercase tracking-widest">${data.tag}</span>
-                    <h2 class="text-3xl font-black mt-2 mb-4 text-white">${data.title}</h2>
-                    <p class="text-slate-400 leading-relaxed mb-6">${data.desc}</p>
-                    <div class="p-4 bg-slate-800 rounded-xl border border-slate-700 text-sm text-slate-500 font-mono">${data.detail}</div>
+                    <span class="text-blue-500 text-xs font-bold uppercase tracking-widest font-mono">${data.tag}</span>
+                    <h2 class="text-3xl font-black mt-2 mb-4 text-white break-all">${data.title}</h2>
+                    <p class="text-slate-400 leading-relaxed mb-6 whitespace-pre-line">${data.desc}</p>
+                    <div class="p-5 bg-neutral-900/50 rounded-2xl border border-neutral-800 text-sm text-slate-500 font-mono italic leading-relaxed">${data.detail}</div>
                     ${linksHtml}
                 `;
             } else if (type === 'blog') {
