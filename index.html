@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peter Yu | 游鎮遠</title>
     
-    <!-- 預覽文字與圖示修復 Meta Tags -->
-    <meta name="description" content="您好！我是游鎮遠，這是我的個人網頁。">
+    <!-- 1. 瀏覽器分頁圖示 (Favicon) -->
+    <link rel="icon" href="img/my_icon.png" type="image/png">
+
+    <!-- 2. 通訊軟體預覽 Meta Tags (LINE, FB, Discord) -->
+    <meta name="description" content="您好！我是游鎮遠，這是我的個人網頁。這裡紀錄了我的學經歷、專案作品與生活興趣。">
     <meta property="og:title" content="Peter Yu | 游鎮遠">
     <meta property="og:description" content="您好！我是游鎮遠，這是我的個人網頁。">
     <meta property="og:type" content="website">
@@ -133,14 +136,14 @@
         </div>
     </div>
 
-    <!-- 優化手機版寬度限制與滑動效果 -->
-    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-8 py-3 rounded-full border border-white/10 shadow-2xl bg-black/40 backdrop-blur-xl flex items-center space-x-8 overflow-x-auto no-scrollbar whitespace-nowrap text-xs md:text-sm font-medium">
+    <!-- 優化手機版滑動機制 -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full border border-white/10 shadow-2xl bg-black/40 backdrop-blur-xl flex items-center space-x-6 overflow-x-auto no-scrollbar whitespace-nowrap text-xs md:text-sm font-medium">
         <a href="#home" class="hover:text-blue-400 transition-colors flex-shrink-0">首頁</a>
-        <a href="#experience" class="hover:text-blue-400 transition-colors text-nowrap flex-shrink-0">學經歷</a>
+        <a href="#experience" class="hover:text-blue-400 transition-colors flex-shrink-0">學經歷</a>
         <a href="#projects" class="hover:text-blue-400 transition-colors flex-shrink-0">專案</a>
         <a href="#interests" class="hover:text-blue-400 transition-colors flex-shrink-0">興趣</a>
-        <a href="#footprints" class="hover:text-blue-400 transition-colors text-nowrap flex-shrink-0">在地嚮導</a>
-        <a href="#youtube" class="hover:text-blue-400 transition-colors flex-shrink-0 text-nowrap">頻道</a>
+        <a href="#footprints" class="hover:text-blue-400 transition-colors flex-shrink-0">在地嚮導</a>
+        <a href="#youtube" class="hover:text-blue-400 transition-colors flex-shrink-0">頻道</a>
         <a href="#contact" class="px-4 py-1.5 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all flex-shrink-0">聯絡我</a>
     </nav>
 
@@ -176,7 +179,6 @@
         </section>
 
         <section id="experience" class="mb-12 reveal">
-            <!-- 新增學經歷標題 -->
             <div class="flex justify-between items-end mb-8 px-2">
                 <h2 class="text-3xl font-black uppercase tracking-tight text-white">學經歷 <span class="text-slate-600 font-light">Experience</span></h2>
             </div>
@@ -236,7 +238,6 @@
                     </div>
                 </div>
             </div>
-            <!-- 灰色 LinkedIn 連結 -->
             <div class="mt-8 px-2 text-right">
                 <a href="https://www.linkedin.com/in/peter890331" target="_blank" class="text-sm text-slate-500 hover:text-blue-400 transition-colors">更多詳細學經歷請至我的 LinkedIn →</a>
             </div>
@@ -322,7 +323,6 @@
                     <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
                 </div>
             </div>
-            <!-- 灰色 GitHub 連結 -->
             <div class="mt-8 px-2 text-right">
                 <a href="https://github.com/peter890331" target="_blank" class="text-sm text-slate-500 hover:text-blue-400 transition-colors">更多專案原始碼請至我的 GitHub →</a>
             </div>
@@ -501,7 +501,7 @@
             {
                 title: "拓元自動搶票助手",
                 tag: "Concert Tickets",
-                desc: "拓元自動搶票助手。\n自動刷新拓元售票系統的購票頁面，依場次順序點擊立即訂購，依位置順序選擇區域，再自動設定張數及勾選條款，最後聚焦驗證碼等待手動輸入。",
+                desc: "自動刷新拓元售票系統的購票頁面，依場次順序點擊立即訂購，依位置順序選擇區域，再自動設定張數及勾選條款，最後聚焦驗證碼等待手動輸入。",
                 images: ["img/projects/Concert Tickets/1.png"],
                 detail: "這不好，不要用。",
                 youtube: "https://www.youtube.com/playlist?list=PLN0w7j_rRAO8jQKUtQZqwDHsG4QiPCuCx",
@@ -511,7 +511,7 @@
             {
                 title: "台灣高鐵自動搶票助手",
                 tag: "High-Speed Rail Tickets",
-                desc: "台灣高鐵自動搶票助手。\n自動刷新台灣高鐵的購票頁面，依設定的訂票時間範圍及早鳥優先，自動選定單程或去回程班次，再自動填寫取票人資訊及勾選條款，最後聚焦驗證碼等待手動輸入。",
+                desc: "自動刷新台灣高鐵的購票頁面，依設定的訂票時間範圍及早鳥優先，自動選定單程或去回程班次，再自動填寫取票人資訊及勾選條款，最後聚焦驗證碼等待手動輸入。",
                 images: ["img/projects/High-Speed Rail Tickets/1.png"],
                 detail: "這不好，不要用。",
                 youtube: "https://www.youtube.com/playlist?list=PLN0w7j_rRAO8jQKUtQZqwDHsG4QiPCuCx",
@@ -543,7 +543,7 @@
             },
             {
                 title: "酷酷琥珀",
-                desc: "琥珀很酷，包裹著億萬年前的時光。",
+                desc: "琥珀很酷，包著億萬年前的時光。",
                 images: ["img/interests/ambers/7.jpg", "img/interests/ambers/8.png"]
             },
             {
