@@ -9,7 +9,7 @@
     <style>
         :root {
             --accent: #3b82f6;
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #000000 100%);
+            --bg-gradient: linear-gradient(135deg, #111827 0%, #020617 100%);
         }
 
         body {
@@ -38,7 +38,7 @@
         }
 
         .bento-item {
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(30, 41, 59, 0.4);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
@@ -50,8 +50,8 @@
         .bento-item:hover {
             transform: scale(1.01);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
-            background: rgba(30, 41, 59, 0.7);
-            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(59, 130, 246, 0.4);
         }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -84,8 +84,7 @@
         .modal-image-item {
             min-width: 100%;
             scroll-snap-align: start;
-            aspect-ratio: 16 / 9;
-            background: #1e293b;
+            background: #000;
             border-radius: 16px;
             overflow: hidden;
             display: flex;
@@ -93,13 +92,15 @@
             justify-content: center;
         }
         .modal-image-item img {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
         }
 
         .glow {
             position: fixed;
             width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(0,0,0,0) 70%);
             border-radius: 50%;
             pointer-events: none;
             z-index: -1;
@@ -113,23 +114,24 @@
     <div class="glow" id="ambient-glow"></div>
 
     <div id="details-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
-        <div class="bento-item max-w-3xl w-full max-h-[90vh] overflow-y-auto bg-slate-900 p-8 relative shadow-2xl cursor-default border-slate-700">
+        <div class="bento-item max-w-3xl w-full max-h-[90vh] overflow-y-auto bg-slate-900 p-8 relative shadow-2xl cursor-default border-slate-700 text-white">
             <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white z-10 cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
-            <div id="modal-content"></div>
+            <div id="modal-content" class="whitespace-pre-line"></div>
         </div>
     </div>
 
-    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-8 py-3 rounded-full border border-white/10 shadow-2xl bg-black/40 backdrop-blur-xl flex items-center space-x-6 md:space-x-8 text-xs md:text-sm font-medium">
-        <a href="#home" class="hover:text-blue-400 transition-colors">首頁</a>
-        <a href="#experience" class="hover:text-blue-400 transition-colors text-nowrap">學經歷</a>
-        <a href="#projects" class="hover:text-blue-400 transition-colors">專案</a>
-        <a href="#interests" class="hover:text-blue-400 transition-colors">興趣</a>
-        <a href="#blog" class="hover:text-blue-400 transition-colors text-nowrap">廢話集</a>
-        <a href="#contact" class="px-4 py-1.5 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all">聯絡我</a>
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-8 py-3 rounded-full border border-white/10 shadow-2xl bg-black/40 backdrop-blur-xl flex items-center space-x-8 overflow-x-auto no-scrollbar whitespace-nowrap text-xs md:text-sm font-medium">
+        <a href="#home" class="hover:text-blue-400 transition-colors flex-shrink-0">首頁</a>
+        <a href="#experience" class="hover:text-blue-400 transition-colors text-nowrap flex-shrink-0">學經歷</a>
+        <a href="#projects" class="hover:text-blue-400 transition-colors flex-shrink-0">專案</a>
+        <a href="#interests" class="hover:text-blue-400 transition-colors flex-shrink-0">興趣</a>
+        <a href="#footprints" class="hover:text-blue-400 transition-colors text-nowrap flex-shrink-0">在地嚮導</a>
+        <a href="#youtube" class="hover:text-blue-400 transition-colors flex-shrink-0 text-nowrap">頻道</a>
+        <a href="#contact" class="px-4 py-1.5 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all flex-shrink-0">聯絡我</a>
     </nav>
 
     <main class="max-w-6xl mx-auto px-6 pt-32 pb-24">
@@ -164,28 +166,28 @@
                 <div class="space-y-8 relative before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-800">
                     <div class="pl-8 relative">
                         <div class="absolute left-0 top-1.5 w-6 h-6 bg-blue-600 rounded-full border-4 border-slate-900 shadow-sm"></div>
-                        <h4 class="font-bold text-lg text-white">國立清華大學 (NTHU)</h4>
-                        <p class="text-sm text-slate-400">電機工程學系 碩士 | 2022 - 現在</p>
+                        <h4 class="font-bold text-lg text-white whitespace-pre-line">國立清華大學 (NTHU)</h4>
+                        <p class="text-sm text-slate-400 whitespace-pre-line">電機工程學系 碩士 | 2022 - 現在</p>
                         <p class="text-xs inline-block bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded mt-1 font-bold">GPA 3.96 / 4.3</p>
                     </div>
                     <div class="pl-8 relative">
-                        <div class="absolute left-0 top-1.5 w-6 h-6 bg-slate-600 rounded-full border-4 border-slate-900 shadow-sm"></div>
-                        <h4 class="font-bold text-lg text-white">國立台北科技大學 (NTUT)</h4>
-                        <p class="text-sm text-slate-400">電子工程系 學士 | 2019 - 2022</p>
+                        <div class="absolute left-0 top-1.5 w-6 h-6 bg-slate-600 rounded-full border-4 border-black shadow-sm"></div>
+                        <h4 class="font-bold text-lg text-white whitespace-pre-line">國立台北科技大學 (NTUT)</h4>
+                        <p class="text-sm text-slate-400 whitespace-pre-line">電子工程系 學士 | 2019 - 2022</p>
                         <div class="flex flex-wrap gap-2 mt-1">
                             <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded font-bold">GPA 3.90 / 4.0</span>
                             <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded font-bold">書卷獎第一名</span>
                             <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded font-bold">三年提早畢業</span>
                         </div>
-                        <p class="text-xs inline-block bg-amber-900/50 text-amber-300 px-2 py-0.5 rounded mt-2 font-bold">專題系內佳作</p>
+                        <p class="text-xs inline-block bg-amber-900/50 text-amber-300 px-2 py-0.5 rounded mt-2 font-bold border border-amber-900/50">專題系內佳作</p>
                     </div>
                     <div class="pl-8 relative">
-                        <div class="absolute left-0 top-1.5 w-6 h-6 bg-slate-600 rounded-full border-4 border-slate-900 shadow-sm"></div>
-                        <h4 class="font-bold text-lg text-white">大安高工 (TAIVS)</h4>
-                        <p class="text-sm text-slate-400">控制科 | 2016 - 2019</p>
+                        <div class="absolute left-0 top-1.5 w-6 h-6 bg-slate-600 rounded-full border-4 border-black shadow-sm"></div>
+                        <h4 class="font-bold text-lg text-white whitespace-pre-line">大安高工 (TAIVS)</h4>
+                        <p class="text-sm text-slate-400 whitespace-pre-line">控制科 | 2016 - 2019</p>
                         <div class="flex flex-wrap gap-2 mt-1">
-                            <span class="text-xs bg-amber-900/50 text-amber-300 px-2 py-0.5 rounded font-bold">專題校內佳作</span>
-                            <span class="text-xs bg-amber-900/50 text-amber-300 px-2 py-0.5 rounded font-bold">專題全國競賽優勝</span>
+                            <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded font-bold border border-amber-500/20 tracking-wide">專題校內佳作</span>
+                            <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded font-bold border border-amber-500/20 tracking-wide">專題全國競賽優勝</span>
                         </div>
                     </div>
                 </div>
@@ -198,17 +200,16 @@
                 <div class="space-y-8 relative before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-800">
                     <div class="pl-8 relative">
                         <div class="absolute left-0 top-1.5 w-6 h-6 bg-slate-600 rounded-full border-4 border-slate-900 shadow-sm"></div>
-                        <h4 class="font-bold text-lg text-white">德欣寰宇科技股份有限公司</h4>
-                        <p class="text-sm text-slate-400">助理工程師 | 2020/07 - 2020/09</p>
-                        <p class="text-sm mt-2 text-slate-500 leading-relaxed">協助資安服務，包括網段弱點掃描、資訊安全教材開發等。</p>
+                        <h4 class="font-bold text-lg text-white whitespace-pre-line">德欣寰宇科技股份有限公司</h4>
+                        <p class="text-sm text-slate-400 whitespace-pre-line">助理工程師 | 2020/07 - 2020/09</p>
+                        <p class="text-sm mt-2 text-slate-500 leading-relaxed whitespace-pre-line">協助資安服務，包括網段弱點掃描、資訊安全教材開發等。</p>
                     </div>
                     <div class="pl-8 relative">
                         <div class="absolute left-0 top-1.5 w-6 h-6 bg-slate-600 rounded-full border-4 border-slate-900 shadow-sm"></div>
-                        <h4 class="font-bold text-lg text-white">德欣寰宇科技股份有限公司</h4>
-                        <p class="text-sm text-slate-400">助理工程師 | 2019/07 - 2019/09</p>
-                        <p class="text-sm mt-2 text-slate-500 leading-relaxed">協助資安服務，包括網段弱點掃描、資訊安全教材開發等。</p>
+                        <h4 class="font-bold text-lg text-white whitespace-pre-line">德欣寰宇科技股份有限公司</h4>
+                        <p class="text-sm text-slate-400 whitespace-pre-line">助理工程師 | 2019/07 - 2019/09</p>
+                        <p class="text-sm mt-2 text-slate-500 leading-relaxed whitespace-pre-line">協助資安服務，包括網段弱點掃描、資訊安全教材開發等。</p>
                     </div>
-                    
                 </div>
             </div>
         </section>
@@ -216,22 +217,81 @@
         <section id="projects" class="mb-12 reveal">
             <div class="flex justify-between items-end mb-8 px-2">
                 <h2 class="text-3xl font-black uppercase tracking-tight text-white">專案 <span class="text-slate-600 font-light">Projects</span></h2>
+                <span class="text-xs text-slate-500 font-medium pb-1 tracking-wider">右滑看更多</span>
             </div>
             <div class="scroll-container no-scrollbar" id="project-scroll">
                 <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 0)">
-                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase">A graduation project in high school</div>
-                    <h3 class="text-xl font-bold mb-4 text-white break-all">PS2 無線遙控教導式機械手臂</h3>
-                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Detail →</div>
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase font-mono text-[10px] tracking-widest whitespace-pre-line">High School Project</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">PS2 無線遙控
+                        教導式機械手臂</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
                 </div>
                 <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 1)">
-                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase">A undergraduate project in university</div>
-                    <h3 class="text-xl font-bold mb-4 text-white break-all">整合至自偏壓收發機模組的透明基板天線</h3>
-                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Detail →</div>
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase font-mono text-[10px] tracking-widest whitespace-pre-line">Undergraduate Project</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">整合至自偏壓收發機模組的
+                        透明基板天線</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
                 </div>
                 <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 2)">
-                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase">A Pokémon GO game bot script</div>
-                    <h3 class="text-xl font-bold mb-4 text-white break-all">new_autoshinyhunter_gui_version</h3>
-                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Detail →</div>
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase break-all font-mono text-[10px] tracking-widest whitespace-pre-line">Pokémon GO Game Bot</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">new_autoshinyhunter_
+                        gui_version</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
+                </div>
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 3)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase break-all font-mono text-[10px] tracking-widest whitespace-pre-line">FreeBitcoin MANUAL BET</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">Martingale-Strategy-
+                        on-FreeBitcoin-
+                        MANUAL-BET</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
+                </div>
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 4)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase break-all font-mono text-[10px] tracking-widest whitespace-pre-line">Pokémon Showcase Chinese</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">寶可補給站選秀會 - 
+                        潛在座標查詢器 - 中文版</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
+                </div>
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 5)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase break-all font-mono text-[10px] tracking-widest whitespace-pre-line">Pokémon Showcase English</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">PokeStop Showcase - 
+                        Potential Coords Finder - 
+                        English Version</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
+                </div>
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 6)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase break-all font-mono text-[10px] tracking-widest whitespace-pre-line">Useful Tool</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">scrcpy_
+                        Auto_Wi-Fi_Connector</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
+                </div>
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 7)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase break-all font-mono text-[10px] tracking-widest whitespace-pre-line">Check Out Subscriptions</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">youtube_views_crawler</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
+                </div>
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 8)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase break-all font-mono text-[10px] tracking-widest whitespace-pre-line">Try To Make Money</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">self-made_
+                        banmuxia_MACD_
+                        strategy_indicator</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
+                </div>
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 9)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase break-all font-mono text-[10px] tracking-widest whitespace-pre-line">Concert Tickets</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">拓元自動搶票助手</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
+                </div>
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 10)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase break-all font-mono text-[10px] tracking-widest whitespace-pre-line">High-Speed Rail Tickets</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">台灣高鐵自動搶票助手</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
+                </div>
+                <div class="scroll-item bento-item p-8 snap-start flex flex-col" onclick="openModal('project', 11)">
+                    <div class="text-xs font-bold text-blue-400 mb-2 uppercase break-all font-mono text-[10px] tracking-widest whitespace-pre-line">Please Pick Me</div>
+                    <h3 class="text-xl font-bold mb-4 text-white break-all whitespace-pre-line">google_
+                        diamond_valley_2025_
+                        bot</h3>
+                    <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mt-auto">Detail →</div>
                 </div>
             </div>
         </section>
@@ -239,74 +299,96 @@
         <section id="interests" class="mb-12 reveal">
             <div class="flex justify-between items-end mb-8 px-2">
                 <h2 class="text-3xl font-black uppercase tracking-tight text-white">興趣 <span class="text-slate-600 font-light">Interests</span></h2>
+                <span class="text-xs text-slate-500 font-medium pb-1 tracking-wider">右滑看更多</span>
             </div>
             <div class="scroll-container no-scrollbar" id="interest-scroll">
                 <div class="min-w-[180px] snap-start bento-item p-8 text-center group" onclick="openModal('interest', 0)">
                     <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🦴</div>
-                    <span class="text-xs font-bold opacity-60 uppercase text-white">可愛動物</span>
+                    <span class="text-xs font-bold opacity-60 uppercase text-white tracking-widest text-nowrap whitespace-pre-line">可愛動物</span>
                 </div>
                 <div class="min-w-[180px] snap-start bento-item p-8 text-center group" onclick="openModal('interest', 1)">
                     <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">💎</div>
-                    <span class="text-xs font-bold opacity-60 uppercase text-white">化石琥珀</span>
+                    <span class="text-xs font-bold opacity-60 uppercase text-white tracking-widest text-nowrap whitespace-pre-line">化石琥珀</span>
                 </div>
                 <div class="min-w-[180px] snap-start bento-item p-8 text-center group" onclick="openModal('interest', 2)">
                     <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🌱</div>
-                    <span class="text-xs font-bold opacity-60 uppercase text-white">食肉植物</span>
+                    <span class="text-xs font-bold opacity-60 uppercase text-white tracking-widest text-nowrap whitespace-pre-line">食肉植物</span>
                 </div>
                 <div class="min-w-[180px] snap-start bento-item p-8 text-center group" onclick="openModal('interest', 3)">
                     <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🪙</div>
-                    <span class="text-xs font-bold opacity-60 uppercase text-white">古幣紙鈔</span>
+                    <span class="text-xs font-bold opacity-60 uppercase text-white tracking-widest text-nowrap whitespace-pre-line">古幣紙鈔</span>
                 </div>
                 <div class="min-w-[180px] snap-start bento-item p-8 text-center group" onclick="openModal('interest', 4)">
                     <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🎮</div>
-                    <span class="text-xs font-bold opacity-60 uppercase text-white">玩點遊戲</span>
+                    <span class="text-xs font-bold opacity-60 uppercase text-white tracking-widest text-nowrap whitespace-pre-line">玩點遊戲</span>
                 </div>
             </div>
         </section>
 
-        <section id="blog" class="mb-12 reveal">
+        <section id="footprints" class="mb-12 reveal">
             <div class="flex justify-between items-end mb-8 px-2">
-                <h2 class="text-3xl font-black uppercase tracking-tight text-white">廢話集 <span class="text-slate-600 font-light">Thoughts</span></h2>
+                <h2 class="text-3xl font-black uppercase tracking-tight text-white text-nowrap">在地嚮導 <span class="text-slate-600 font-light">Local Guide</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <div class="md:col-span-4 bento-item p-8 flex flex-col items-center justify-center text-center">
+                    <div class="mb-6 relative">
+                        <div class="w-24 h-24 bg-amber-400/20 rounded-full flex items-center justify-center animate-pulse">
+                            <span class="text-6xl font-black text-amber-400">7</span>
+                        </div>
+                        <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-amber-400 text-black text-[10px] font-black px-3 py-0.5 rounded-full tracking-tighter uppercase">Level</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 whitespace-pre-line">Google 在地嚮導</h3>
+                    <p class="text-[10px] text-slate-500 mb-6 whitespace-pre-line text-center leading-relaxed">
+                        地圖地點需手動更新，我有點懶得弄，
+                        詳細內容可以點選下方按鈕前往我的貢獻頁面查看。
+                    </p>
+                    <a href="https://www.google.com/maps/contrib/108182389515636878029/reviews" target="_blank" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-[10px] font-black uppercase tracking-[0.25em] transition-all text-center shadow-lg text-nowrap">
+                        前往我的貢獻頁面 →
+                    </a>
+                </div>
+                <div class="md:col-span-8 bento-item p-2 overflow-hidden min-h-[400px]">
+                    <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1Is9yDry_MtGINtylZgC5Yy_DEnKYXfg&ehbc=2E312F" class="w-full h-full rounded-2xl opacity-95" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="youtube" class="mb-12 reveal">
+            <div class="flex justify-between items-end mb-8 px-2">
+                <h2 class="text-3xl font-black uppercase tracking-tight text-white text-nowrap">頻道 <span class="text-slate-600 font-light">YouTube</span></h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bento-item p-8 flex flex-col justify-between" onclick="openModal('blog', 0)">
-                    <div>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">2025 / 12 / 19</span>
-                        <h3 class="text-lg font-bold mt-2 mb-4 text-white">歡迎來到我的個人網頁</h3>
-                        <p class="text-sm text-slate-400 line-clamp-3">以前的個人網頁荒廢已久，沒事來做一個新的，但不知道可以維護多久，ㄏㄏ。</p>
-                    </div>
-                    <div class="text-blue-400 text-[10px] font-black uppercase mt-6">Read More →</div>
+                <div class="md:col-span-2 bento-item p-2 aspect-video overflow-hidden">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="rounded-2xl"></iframe>
                 </div>
-                <div class="bento-item p-8 flex flex-col justify-center border-dashed border-2 border-slate-700 bg-transparent cursor-default">
-                    <p class="text-center text-slate-600 text-sm font-medium italic">更多內容正在醞釀中...</p>
+                <div class="bento-item p-8 flex flex-col justify-center text-center">
+                    <div class="w-20 h-20 bg-red-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93 0.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-0.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 whitespace-pre-line">游彼得</h3>
+                    <p class="text-xs text-slate-400 mb-8 leading-relaxed whitespace-pre-line">我的 YouTube 頻道，
+                        希望偶爾做點技術影片，但目前都是廢片。</p>
+                    <a href="https://www.youtube.com/@peter0331" target="_blank" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-[10px] font-black uppercase tracking-[0.25em] transition-all text-center shadow-lg">
+                        前往我的 YouTube 頻道 →
+                    </a>
                 </div>
             </div>
         </section>
 
-        <footer id="contact" class="text-center py-12 border-t border-slate-900 mt-12 reveal">
-            <h2 class="text-xl font-black mb-8 text-white uppercase tracking-tighter italic">聯絡我</h2>
+        <footer id="contact" class="text-center py-12 border-t border-neutral-900 mt-12 reveal">
+            <h2 class="text-xl font-black mb-8 text-white uppercase tracking-tighter italic whitespace-pre-line">聯絡我</h2>
             <div class="flex flex-wrap justify-center gap-8 mb-8">
-                <a href="mailto:peter890331@gmail.com" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
-                    Email <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
-                </a>
-                <a href="http://www.linkedin.com/in/peter890331" target="_blank" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
-                    LinkedIn <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
-                </a>
-                <a href="https://github.com/peter890331" target="_blank" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
-                    GitHub <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
-                </a>
                 <a href="https://linktr.ee/peter890331" target="_blank" class="group text-slate-400 hover:text-blue-400 transition-colors font-medium relative">
                     Linktree <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all"></span>
                 </a>
             </div>
-            <p class="text-[10px] text-slate-600 uppercase tracking-[0.25em] font-bold">Peter Yu &copy; 2025</p>
+            <p class="text-[10px] text-slate-600 uppercase tracking-[0.25em] font-bold text-nowrap whitespace-pre-line">Peter Yu &copy; 2025</p>
         </footer>
     </main>
 
     <script>
         const projectData = [
             {
-                title: "PS2 無線遙控教導式機械手臂 | PS2 Wireless Remote Control Teachable Robotic Arm",
+                title: "PS2 無線遙控教導式機械手臂 | \nPS2 Wireless Remote Control\n Teachable Robotic Arm",
                 tag: "A graduation project in high school",
                 desc: "PS2 無線遙控教導式機械手臂，透過流暢的自動學習系統，提升機械手臂流程修改上的效率，本團隊利用整合 PS2 無線遙控模組與 LCD 顯示器，做出簡單的人機控制介面，PS2 控制器用來操控機械手臂的所有動作，LCD 則用以顯示動作資訊，使用者便能夠更簡單地對機械手臂進行操控與教導，讓功能完善的自組機械手臂自動化做出任何使用者教導的動作流程，令其持續工作，當然也能隨時教導新的動作流程。而使用者也能夠在設定流程時選擇自動流程所需的次數， 模擬工廠自動設備的工作要求。",
                 images: ["img/projects/A graduation project in high school/1.jpg", "img/projects/A graduation project in high school/2.jpg", "img/projects/A graduation project in high school/3.jpg", "img/projects/A graduation project in high school/4.jpg"],
@@ -315,9 +397,9 @@
                 github: "https://github.com/peter890331/PS2-Wireless-Remote-Control-Teachable-Robotic-Arm.git"
             },
             {
-                title: "整合至自偏壓收發機模組的透明基板天線 | Transparent Substrate Antennas Integrating to Self Biased Transceiver Modules",
+                title: "整合至自偏壓收發機模組的透明基板天線 | \nTransparent Substrate Antennas \nIntegrating to Self Biased Transceiver Modules",
                 tag: "A undergraduate project in university",
-                desc: "本專題以Monopole天線外型為基礎，設計並製作一款可基於透明基板上之天線，並於天線中預留足夠的空間讓太陽光通過，使位於下方的太陽能板能提供電力驅動藍牙模組，藍牙模組則透過此天線於2.4GHz~2.48GHz的ISM頻段傳輸訊息，完成自偏壓之收發機模組。\n\n欲設計出能使陽光順利通過的天線，經由本組研究後決定採用玻璃作為天線之基板。由於玻璃基板無法使用一般常見的銅蝕刻技術製作天線，因此本次專題之透明基板天線是運用到奈米噴印技術所印製而成，相較於傳統利用銅蝕刻技術製作之天線，此技術能選用多種不同材質的墨水作為天線上之導體，並且能噴印在如玻璃等基板的表面。本專題採用的方案，是以奈米銀為導體印製於玻璃基板，使太陽光能穿透天線的網格與透明基板，到達太陽能板以提供收發機模組所需的電力，而銀具有良好的導電能力，能做為天線的導體材質。\n\n將透明基板天線連接到藍牙模組後，能順利與手機的應用程式通訊，同時天線下方的太陽能板也能正常運作，轉換太陽能為電力並儲存至鋰電池中，以提供Arduino藍牙模組持續運作所需能源。",
+                desc: "本專題以Monopole天線外型為基礎，設計並製作一款可基於透明基板上之天線，並於天線中預留足夠的空間讓太陽光通過，使位於下方的太陽能板能提供電力驅動藍牙模組，藍牙模組則透過此天線於2.4GHz~2.48GHz的ISM頻段傳輸訊息，完成自偏壓之收發機模組。\n\n欲設計出能使陽光順利通過的天線，經由本組研究後決定採用玻璃作為天線之基板。由於玻璃基板無法使用一般常見的銅蝕刻技術製作天線，因此本次專題之透明基板天線是運用到奈米噴印技術所印製而成，相較於傳統利用銅蝕刻技術製作之天線，此技術能選用多種不同材質的墨水作為天線上之導體，並且能噴印在如玻璃等基板的表面。本專題採用的方案，是以奈米銀為導體印製於玻璃基板，使太陽光能穿透天線網格與透明基板，到達太陽能板以提供收發機模組所需的電力，而銀具有良好的導電能力，能做為天線的導體材質。\n\n將透明基板天線連接到藍牙模組後，能順利與手機的應用程式通訊，同時天線下方的太陽能板也能正常運作，轉換太陽能為電力並儲存至鋰電池中，以提供Arduino藍牙模組持續運作所需能源。",
                 images: ["img/projects/A undergraduate project in university/1.jpg", "img/projects/A undergraduate project in university/2.jpg", "img/projects/A undergraduate project in university/3.jpg", "img/projects/A undergraduate project in university/4.jpg", "img/projects/A undergraduate project in university/5.png"],
                 detail: "白癡天線專題。",
                 youtube: "https://youtu.be/ptymVCwnhSs",
@@ -328,18 +410,90 @@
                 tag: "A Pokémon GO game bot script",
                 desc: "一個在Pokémon GO中自動點擊色違且iv100的寶可夢的外掛腳本。\n\nThis game bot script can fully automatically send your game position to any location in the world where the specified iv100 pokémon appear, and click on the pokémon to determine whether it is a shiny, if not, then continue to try in the whole world, if yes, stop the script and wait for manual capture.",
                 images: ["img/projects/A Pokémon GO game bot script/1.png"],
-                detail: "最有成就感的 Side Project 耶。",
-                youtube: "https://www.youtube.com/watch?v=8h2jUKUrAkY&list=PLN0w7j_rRAO8jQKUtQZqwDHsG4QiPCuCx&pp=gAQB",
+                detail: "非常有成就感的 Side Project。",
+                youtube: "https://www.youtube.com/playlist?list=PLN0w7j_rRAO8jQKUtQZqwDHsG4QiPCuCx",
                 github: "https://github.com/peter890331/new_autoshinyhunter_gui_version"
             },
-        ];
-
-        const blogData = [
             {
-                title: "歡迎來到我的個人網頁",
-                date: "2025 / 12 / 19",
-                content: "以前的個人網頁荒廢已久，沒事來做一個新的，但不知道可以維護多久，ㄏㄏ。"
-            }
+                title: "Martingale-Strategy-on-\nFreeBitcoin-MANUAL-BET",
+                tag: "FreeBitcoin MANUAL BET",
+                desc: "一個在 FreeBitcoin 的 MANUAL BET 上\n使用 馬丁格爾策略 (Martingale Strategy) 的 javascript 腳本。",
+                images: ["img/projects/FreeBitcoin MANUAL BET/1.png"],
+                detail: "賭博不好。",
+                github: "https://github.com/peter890331/Martingale-Strategy-on-FreeBitcoin-MANUAL-BET"
+            },
+            {
+                title: "寶可補給站選秀會 - \n潛在座標查詢器 - 中文版",
+                tag: "Pokémon Showcase Chinese",
+                desc: "這是一個座標查詢器網頁，\n用來查詢Pokémon GO中在其他時區即將結束且可能未被佔領的選秀會當地座標。\n這些座標由我手動不定時添加，我有空的話啦。",
+                images: ["img/projects/Pokémon Showcase Chinese/1.png"],
+                detail: "造福大眾？",
+                github: "https://github.com/peter890331/PokeStop_Showcase-Potential_Coords_Finder-Chinese_Version",
+                website: "https://peter890331.github.io/PokeStop_Showcase-Potential_Coords_Finder-Chinese_Version/"
+            },
+            {
+                title: "PokeStop Showcase - \nPotential Coords Finder - English Version",
+                tag: "Pokémon Showcase English",
+                desc: "This is a coordinate finder webpage used to find the coordinates of showcase in Pokémon GO that are about to end in other time zones and may not be occupied. \nThe coordinates are added manually by me from time to time, maybe?",
+                images: ["img/projects/Pokémon Showcase English/1.png"],
+                detail: "造福大眾？",
+                github: "https://github.com/peter890331/PokeStop_Showcase-Potential_Coords_Finder-English_Version",
+                website: "https://peter890331.github.io/PokeStop_Showcase-Potential_Coords_Finder-English_Version/"
+            },
+            {
+                title: "scrcpy_Auto_Wi-Fi_Connector",
+                tag: "Useful Tool",
+                desc: "This is a bat file that simplifies the process of using scrcpy to mirror an Android phone to Windows computer via TCP/IP. \nIt automates the connection process, allowing users to easily establish a connection between their Android phone and Windows computer.",
+                images: ["img/projects/Useful Tool/1.png"],
+                detail: "要把手機投影到電腦的時候很好用喔。",
+                github: "https://github.com/peter890331/scrcpy_Auto_Wi-Fi_Connector"
+            },
+            {
+                title: "youtube_views_crawler",
+                tag: "Check Out Subscriptions",
+                desc: "以 Selenium 爬蟲 YouTube 頻道的長影片與短影音觀看次數。",
+                images: ["img/projects/Check Out Subscriptions/1.png", "img/projects/Check Out Subscriptions/2.png", "img/projects/Check Out Subscriptions/3.png", "img/projects/Check Out Subscriptions/4.png", "img/projects/Check Out Subscriptions/5.png",],
+                detail: "我也不知道做這個幹嘛。",
+                github: "https://github.com/peter890331/youtube_views_crawler"
+            },
+            {
+                title: "self-made_\nbanmuxia_MACD_strategy_indicator",
+                tag: "Try To Make Money",
+                desc: "自製在 TradingView 上使用的半木夏 MACD 交易策略的 Pine Script。",
+                images: ["img/projects/Try To Make Money/1.png", "img/projects/Try To Make Money/2.png"],
+                detail: "賠錢不負責。",
+                github: "https://github.com/peter890331/self-made_banmuxia_MACD_strategy_indicator"
+            },
+            {
+                title: "拓元自動搶票助手",
+                tag: "Concert Tickets",
+                desc: "拓元自動搶票助手。\n自動刷新拓元售票系統的購票頁面，依場次順序點擊立即訂購，依位置順序選擇區域，再自動設定張數及勾選條款，最後聚焦驗證碼等待手動輸入。",
+                images: ["img/projects/Concert Tickets/1.png"],
+                detail: "這不好，不要用。",
+                youtube: "https://www.youtube.com/playlist?list=PLN0w7j_rRAO9X598T8Ahxqe1XsXIYu9eS",
+                github: "https://github.com/peter890331/tixcraft-Automatic-Ticket-Snatch-Assistant"
+
+            },
+            {
+                title: "台灣高鐵自動搶票助手",
+                tag: "High-Speed Rail Tickets",
+                desc: "台灣高鐵自動搶票助手。\n自動刷新台灣高鐵的購票頁面，依設定的訂票時間範圍及早鳥優先，自動選定單程或去回程班次，再自動填寫取票人資訊及勾選條款，最後聚焦驗證碼等待手動輸入。",
+                images: ["img/projects/High-Speed Rail Tickets/1.png"],
+                detail: "這不好，不要用。",
+                youtube: "https://www.youtube.com/playlist?list=PLN0w7j_rRAO9ntGRI2_61DL_pdoL_fq_N",
+                github: "https://github.com/peter890331/TaiwanHighSpeedRail-Automatic-Ticket-Snatch-Assistant"
+
+            },
+            {
+                title: "google_diamond_valley_2025_bot",
+                tag: "Please Pick Me",
+                desc: "Google 超鑽感謝祭 2025 的 釣魚 和 挖礦 機器人。",
+                images: ["img/projects/Please Pick Me/1.png", "img/projects/Please Pick Me/2.png"],
+                detail: "玩玩而已，拜託 Google 不要生氣。",
+                youtube: "https://youtube.com/playlist?list=PLN0w7j_rRAO9fkrKOxKgdxCSBCuunLYmC&si=kvCFYSAHEww88tRK",
+                github: "https://github.com/peter890331/google_diamond_valley_2025_bot"
+
+            },
         ];
 
         const interestData = [
@@ -350,22 +504,22 @@
             },
             {
                 title: "化石琥珀",
-                desc: "化石跟琥珀其實沒有大家想像的那麼遙不可及，又沒有一定要買整隻恐龍。",
+                desc: "化石跟琥珀其實沒有大家想像的那麼遙不可及，每一塊都是定格的時間膠囊。",
                 images: []
             },
             {
                 title: "食肉植物",
-                desc: "吃肉的植物，雖然現在沒種了。",
+                desc: "雖然現在沒種了，但依然覺得食肉植物的演化機制非常迷人。",
                 images: []
             },
             {
                 title: "古幣紙鈔",
-                desc: "這超酷，以古為鏡，可以知興替。",
+                desc: "這超酷，透過古幣可以看見歷史的興替與工藝的演進。",
                 images: []
             },
             {
                 title: "玩點遊戲",
-                desc: "就偶爾玩玩，越玩越懶，還寫了一堆外掛，甚至是外掛的外掛。",
+                desc: "就偶爾玩玩，除了玩也喜歡研究遊戲背後的各種機制與外掛實作。",
                 images: []
             }
         ];
@@ -393,7 +547,7 @@
         function openModal(type, index) {
             const modal = document.getElementById('details-modal');
             const content = document.getElementById('modal-content');
-            let data = type === 'project' ? projectData[index] : (type === 'blog' ? blogData[index] : interestData[index]);
+            let data = type === 'project' ? projectData[index] : interestData[index];
 
             let imagesHtml = '';
             if (data.images && data.images.length > 0) {
@@ -413,7 +567,7 @@
 
             if (type === 'project') {
                 let linksHtml = '';
-                if (data.youtube || data.github) {
+                if (data.youtube || data.github || data.website) {
                     linksHtml = `<div class="mt-6 border-t border-slate-800 pt-6 flex flex-wrap gap-4">`;
                     if (data.youtube) {
                         linksHtml += `
@@ -429,30 +583,29 @@
                             </a>
                         `;
                     }
+                    if (data.website) {
+                        linksHtml += `
+                            <a href="${data.website}" target="_blank" class="inline-flex items-center space-x-2 text-blue-400 hover:bg-blue-900/20 px-3 py-1.5 rounded-lg transition-all font-bold text-sm border border-blue-900/20">
+                                <span>Website</span>
+                            </a>
+                        `;
+                    }
                     linksHtml += `</div>`;
                 }
 
                 content.innerHTML = `
                     ${imagesHtml}
-                    <span class="text-blue-500 text-xs font-bold uppercase tracking-widest font-mono">${data.tag}</span>
-                    <h2 class="text-3xl font-black mt-2 mb-4 text-white break-all">${data.title}</h2>
+                    <span class="text-blue-500 text-xs font-bold uppercase tracking-widest font-mono font-bold tracking-wider whitespace-pre-line">${data.tag}</span>
+                    <h2 class="text-3xl font-black mt-2 mb-4 text-white break-all whitespace-pre-line">${data.title}</h2>
                     <p class="text-slate-400 leading-relaxed mb-6 whitespace-pre-line">${data.desc}</p>
-                    <div class="p-5 bg-neutral-900/50 rounded-2xl border border-neutral-800 text-sm text-slate-500 font-mono italic leading-relaxed">${data.detail}</div>
+                    <div class="p-5 bg-neutral-900/50 rounded-2xl border border-neutral-800 text-sm text-slate-500 font-mono italic leading-relaxed break-all whitespace-pre-line">${data.detail}</div>
                     ${linksHtml}
-                `;
-            } else if (type === 'blog') {
-                content.innerHTML = `
-                    <span class="text-blue-400 text-xs font-bold uppercase tracking-widest">${data.date}</span>
-                    <h2 class="text-3xl font-black mt-2 mb-8 text-white">${data.title}</h2>
-                    <div class="prose prose-invert max-w-none">
-                        <p class="text-slate-400 leading-relaxed text-lg whitespace-pre-line">${data.content}</p>
-                    </div>
                 `;
             } else {
                 content.innerHTML = `
                     ${imagesHtml}
-                    <h2 class="text-3xl font-black mb-4 text-white">${data.title}</h2>
-                    <p class="text-slate-400 leading-relaxed">${data.desc}</p>
+                    <h2 class="text-3xl font-black mb-4 text-white break-all whitespace-pre-line">${data.title}</h2>
+                    <p class="text-slate-400 leading-relaxed whitespace-pre-line">${data.desc}</p>
                 `;
             }
             
