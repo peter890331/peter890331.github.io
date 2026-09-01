@@ -1,2 +1,1 @@
-My personal website, but temporarily taken it down.     
-Right now, I'm only using it to host app-ads.txt.
+I've temporarily taken down my personal website and am currently using it solely to host my app-ads.txt file.
